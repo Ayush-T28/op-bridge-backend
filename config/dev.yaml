@@ -1,0 +1,7 @@
+ExternalServer:
+  cors:
+    allowedOrigins:
+      - '["http://localhost"]'
+Database:
+  host: localhost
+  port: 5432

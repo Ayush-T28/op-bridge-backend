@@ -1,0 +1,20 @@
+Database:
+  user: PGUSER
+  password: PGPASS
+  host: PG_HOST
+  port: PG_PORT
+  database: PG_DATABASE
+  max: PG_MAX_CONNECTIONS
+  min: PG_MIN_CONNECTIONS
+Protocol:
+  frontend_base_suburl: FRONTEND_BASE_URL
+ExternalServer:
+  port: SERVER_PORT
+  enableGlobalRateLimit: ENABLE_GLOBAL_RATE_LIMIT
+  globalRateLimit:
+    window: GLOBAL_RATE_LIMIT_WINDOW_IN_MILLISECONDS
+    hits: GLOBAL_RATE_LIMIT_HITS_PER_WINDOW
+  cors:
+    allowedOrigins: ALLOWED_URLS
+auth-service:
+  url: AUTH_SERVICE_INTERNAL

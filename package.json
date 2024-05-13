@@ -1,0 +1,57 @@
+{
+  "name": "bridge-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint \"./src/**\"",
+    "build": "tsc",
+    "start": "node .",
+    "prestart": "npx knex migrate:latest --env configuration"
+  },
+  "author": "Harish H<harish.h@zeeve.io> Rohan Sharma<rohan.sharma@zeeve.io>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://code.zeeve.net/zeeve-platform/tracehawk/the-binary-holdings/bridge-backend"
+  },
+  "dependencies": {
+
+    "@types/pg-format": "^1.0.2",
+    "@types/request-promise": "^4.1.48",
+    "@types/uuid": "^9.0.2",
+    "@zeeve-platform/express-server-library": "^1.0.7-beta.0",
+    "@zeeve-platform/postgres-interaction-sdk": "1.0.8",
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "debounce": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "joi": "^17.9.2",
+    "js-yaml": "^4.1.0",
+    "knex": "^2.5.1",
+    "log4js": "^6.9.1",
+    "moment": "^2.30.1",
+    "node-cache": "^5.1.2",
+    "node-schedule": "^2.1.1",
+    "pg-format": "^1.0.4",
+    "request-promise": "^4.2.6",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.5.1",
+    "@types/node-schedule": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "typescript": "^5.1.6"
+  }
+}

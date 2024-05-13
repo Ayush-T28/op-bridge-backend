@@ -1,0 +1,20 @@
+ExternalServer:
+  port: 3009
+  enableGlobalRateLimit: true
+  headerCtMaxAge: 86400
+  numberOfProxies: 2
+  cors:
+    allowedOrigins:
+      - '["http://localhost"]'
+  requestBodySize: 1mb
+logger:
+  level: "debug"
+
+Database:
+  user: harish
+  password: harish
+  host: localhost
+  port: 5432
+  database: bridge_db
+  max: 20
+  min: 5
