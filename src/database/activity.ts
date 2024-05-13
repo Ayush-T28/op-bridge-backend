@@ -3,9 +3,9 @@ import { QueryResultRow } from '@zeeve-platform/postgres-interaction-sdk';
 import format from 'pg-format';
 import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
-import { Deposit, DepositQuery } from '../types';
+import { Activity, ActivityQuery } from '../types';
 
-const logger = getLogger('deposit-queries');
+const logger = getLogger('activity-queries');
 
 const toSnakeCase = (input: string): string => input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
 
@@ -25,55 +25,42 @@ export const camelCaseToSnake = (updateValues: Object): {setClause: string, para
     setClause = setClause.slice(0, -2);
     return { setClause, parameters };
 };
+
+
 // write queries
-export const createDeposit = async ({
-    id, account, type, amount, currencySymbol, createdAt,
-}: Deposit): Promise<QueryResultRow> => {
+export const createActivity = async ({
+    id, transactionId, subtype, transactionHash, status, createdAt,
+}: Activity): Promise<QueryResultRow> => {
     try {
         const parameters = [
             [
-                id, account, type, amount, currencySymbol, createdAt,
+                id, transactionId, subtype, transactionHash, status, createdAt,
             ],
         ];
-        const query = format('INSERT INTO transactions (id, account, type, amount, currency_symbol, created_at) VALUES %L', parameters);
+        const query = format('INSERT INTO activity_logs (id, transaction_id, subtype, transaction_hash,'
+                + ' status, created_at) VALUES %L', parameters);
         const result = await databaseService.query(query, []);
         if (result && result.rows) {
             return result.rows[0];
         }
         return {};
     } catch (error) {
-        logger.error({ METHOD: 'createDeposit', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'createActivity', FILE: 'activity-queries', error });
         throw error;
     }
 };
 
 
-export const getDeposit = async (depositId: string): Promise<DepositQuery> => {
+export const getActivityByTransactionId = async (transactionId: string): Promise<ActivityQuery[]> => {
     try {
-        const query = format(`SELECT *
-            FROM transactions where id = $1`);
-        const result = await databaseService.query(query, [depositId]);
-        if (result && result.rows) {
-            return result.rows[0];
-        }
-        return {} as DepositQuery;
-    } catch (error) {
-        logger.error({ METHOD: 'getDeposit', FILE: 'deposit-queries', error });
-        throw error;
-    }
-};
-
-export const getDepositsByAccount = async (account: string): Promise<DepositQuery[]> => {
-    try {
-        const query = format(`SELECT *
-            FROM transactions where account= $1`);
-        const result = await databaseService.query(query, [account]);
+        const query = format('SELECT * FROM activity_logs where transaction_id = $1');
+        const result = await databaseService.query(query, [transactionId]);
         if (result && result.rows) {
             return result.rows;
         }
-        return {} as DepositQuery[];
+        return {} as ActivityQuery[];
     } catch (error) {
-        logger.error({ METHOD: 'getDepositsByAccount', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'getActivityByTransactionId', FILE: 'activity-queries', error });
         throw error;
     }
 };

@@ -1,13 +1,16 @@
 import {
     Routing,
 } from '@zeeve-platform/express-server-library';
-import * as withdrawalController from '../controllers/deposit';
+import * as withdrawalController from '../controllers/withdrawal';
 
 export const dashboardRouting: Routing = {
     isRoute: false,
     url: '/withdrawal',
     childRoutes: [
-        withdrawalController.createDeposit,
+        withdrawalController.createWithdrawal,
+        withdrawalController.updateWithdrawal,
+        withdrawalController.getWithdrawalsByAccount,
+
     ],
 };
 

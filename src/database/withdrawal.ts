@@ -5,7 +5,7 @@ import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
 import { Deposit, DepositQuery } from '../types';
 
-const logger = getLogger('deposit-queries');
+const logger = getLogger('withdrawal-queries');
 
 const toSnakeCase = (input: string): string => input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
 
@@ -26,7 +26,7 @@ export const camelCaseToSnake = (updateValues: Object): {setClause: string, para
     return { setClause, parameters };
 };
 // write queries
-export const createDeposit = async ({
+export const createWithdrawal = async ({
     id, account, type, amount, currencySymbol, createdAt,
 }: Deposit): Promise<QueryResultRow> => {
     try {
@@ -42,13 +42,13 @@ export const createDeposit = async ({
         }
         return {};
     } catch (error) {
-        logger.error({ METHOD: 'createDeposit', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'createWithdrawal', FILE: 'withdrawal-queries', error });
         throw error;
     }
 };
 
 
-export const getDeposit = async (depositId: string): Promise<DepositQuery> => {
+export const getWithdrawal = async (depositId: string): Promise<DepositQuery> => {
     try {
         const query = format(`SELECT *
             FROM transactions where id = $1`);
@@ -58,12 +58,12 @@ export const getDeposit = async (depositId: string): Promise<DepositQuery> => {
         }
         return {} as DepositQuery;
     } catch (error) {
-        logger.error({ METHOD: 'getDeposit', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'getWithdrawal', FILE: 'withdrawal-queries', error });
         throw error;
     }
 };
 
-export const getDepositsByAccount = async (account: string): Promise<DepositQuery[]> => {
+export const getWithdrawalsByAccount = async (account: string): Promise<DepositQuery[]> => {
     try {
         const query = format(`SELECT *
             FROM transactions where account= $1`);
@@ -73,7 +73,7 @@ export const getDepositsByAccount = async (account: string): Promise<DepositQuer
         }
         return {} as DepositQuery[];
     } catch (error) {
-        logger.error({ METHOD: 'getDepositsByAccount', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'getWithdrawalsByAccount', FILE: 'withdrawal-queries', error });
         throw error;
     }
 };
