@@ -11,10 +11,5 @@ logger:
   level: "debug"
 
 Database:
-  user: harish
-  password: harish
-  host: localhost
-  port: 5432
-  database: bridge_db
   max: 20
   min: 5
