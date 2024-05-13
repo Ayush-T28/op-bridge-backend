@@ -10,7 +10,11 @@ export const createDepositValidation = (req: Request,
     res: Response, next: NextFunction): void => {
     try {
         const createDepositSchema = Joi.object().keys({
-            publicKey: Joi.string().required(),
+            account: Joi.string().required(),
+            type: Joi.string().required(),
+            subtype: Joi.string().required(),
+            amount: Joi.number().required(),
+            transactionHash: Joi.string().required(),
         });
 
         const { error } = createDepositSchema.validate(req.body);

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { handleErrorResponse, sendDataResponse, Route } from '@zeeve-platform/express-server-library';
-import { createWithdrawaltValidation } from '../middlewares/withdrawal';
+import { getActivityByTransactionId } from '../database/activity';
 
 export const getActivity: Route = {
     isRoute: true,
-    path: '/',
+    path: '/:transactionId',
     method: 'get',
     handlers: [
         /**
@@ -13,7 +13,6 @@ export const getActivity: Route = {
          * @param {Response} res Express response object
          * @param {NextFunction} next Express next function
          */
-        createWithdrawaltValidation,
         /**
          * Creates network with requested details
          * @param {Request} req Express request object
@@ -21,7 +20,9 @@ export const getActivity: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
-                return sendDataResponse({ success: true, message: 'activity list' }, res);
+                const { transactionId } = req.params;
+                const data = await getActivityByTransactionId(transactionId);
+                return sendDataResponse({ success: true, message: 'activity list', data }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
                     return handleErrorResponse({ status: error.status, message: error.message }, res);

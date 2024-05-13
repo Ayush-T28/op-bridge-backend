@@ -8,6 +8,7 @@ export const dashboardRouting: Routing = {
     url: '/deposit',
     childRoutes: [
         depositController.createDeposit,
+        depositController.getDepositsByAccount,
     ],
 };
 

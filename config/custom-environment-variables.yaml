@@ -18,3 +18,16 @@ ExternalServer:
     allowedOrigins: ALLOWED_URLS
 auth-service:
   url: AUTH_SERVICE_INTERNAL
+
+L1:
+  rpcUrl: L1_RPC_URL
+  explorerUrl: L1_EXPLORER_URL
+  contractAddress: L1_CONTRACT_ADDRESS
+  currencySymbol: L1_CURRENCY_SYMBOL
+
+
+L2:
+  rpcUrl: L2_RPC_URL
+  explorerUrl: L2_EXPLORER_URL
+  contractAddress: L2_CONTRACT_ADDRESS
+  currencySymbol: L2_CURRENCY_SYMBOL

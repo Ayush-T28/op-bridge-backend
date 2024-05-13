@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 import { handleErrorResponse, sendDataResponse, Route } from '@zeeve-platform/express-server-library';
 import { createDepositValidation } from '../middlewares/deposit';
+import * as DepositDatabase from '../database/deposit';
+import { createActivity } from '../database/activity';
 
 export const createDeposit: Route = {
     isRoute: true,
-    path: '/create',
+    path: '',
     method: 'post',
     handlers: [
         /**
@@ -21,6 +24,26 @@ export const createDeposit: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
+                const {
+                    account, type, subtype, amount, transactionHash,
+                } = req.body;
+                const transactionId = uuidv4();
+                await DepositDatabase.createDeposit({
+                    id: transactionId,
+                    account,
+                    type,
+                    amount,
+                    currencySymbol: 'eth',
+                    createdAt: new Date(),
+                });
+                await createActivity({
+                    id: uuidv4(),
+                    transactionId,
+                    subtype,
+                    transactionHash,
+                    createdAt: new Date(),
+                    status: 'pending',
+                });
                 return sendDataResponse({ success: true, message: 'deposit created' }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
@@ -32,10 +55,11 @@ export const createDeposit: Route = {
     ],
 };
 
-export const updateDeposit: Route = {
+
+export const getDepositsByAccount: Route = {
     isRoute: true,
-    path: '/update',
-    method: 'post',
+    path: '/:account',
+    method: 'get',
     handlers: [
         /**
          * Check authorization
@@ -43,7 +67,6 @@ export const updateDeposit: Route = {
          * @param {Response} res Express response object
          * @param {NextFunction} next Express next function
          */
-        createDepositValidation,
         /**
          * Creates network with requested details
          * @param {Request} req Express request object
@@ -51,7 +74,9 @@ export const updateDeposit: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
-                return sendDataResponse({ success: true, message: 'deposit created' }, res);
+                const { account } = req.params;
+                const data = await DepositDatabase.getDepositsByAccount(account);
+                return sendDataResponse({ success: true, message: 'Deposit List', data }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
                     return handleErrorResponse({ status: error.status, message: error.message }, res);
