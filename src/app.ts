@@ -4,6 +4,7 @@ import { Options, ServerApp } from '@zeeve-platform/express-server-library';
 import depositRouting from './routes/deposit';
 import withdrawalRouting from './routes/withdrawal';
 import activityRouting from './routes/activity';
+import chainRouting from './routes/chain';
 
 
 const serverName = 'ExternalServer';
@@ -61,6 +62,7 @@ const initExternalServer = (): void => {
     externalAPIServer.applyRoutes('', depositRouting);
     externalAPIServer.applyRoutes('', withdrawalRouting);
     externalAPIServer.applyRoutes('', activityRouting);
+    externalAPIServer.applyRoutes('', chainRouting);
 
     externalAPIServer.initalise();
 };
