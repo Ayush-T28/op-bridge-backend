@@ -9,6 +9,7 @@ export const chainRouting: Routing = {
     childRoutes: [
         chainController.getL1Details,
         chainController.getL2Details,
+        chainController.getTokenDetails,
     ],
 };
 
