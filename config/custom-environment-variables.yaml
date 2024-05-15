@@ -31,3 +31,8 @@ L2:
   explorerUrl: L2_EXPLORER_URL
   contractAddress: L2_CONTRACT_ADDRESS
   currencySymbol: L2_CURRENCY_SYMBOL
+
+TOKEN:
+  name: TOKEN_NAME
+  symbol: TOKEN_SYMBOL
+  contractAddress: TOKEN_CONTRACT_ADDRESS
