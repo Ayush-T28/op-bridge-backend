@@ -3,7 +3,7 @@ import {
 } from '@zeeve-platform/express-server-library';
 import * as depositController from '../controllers/deposit';
 
-export const dashboardRouting: Routing = {
+export const depositRouting: Routing = {
     isRoute: false,
     url: '/deposit',
     childRoutes: [
@@ -12,4 +12,4 @@ export const dashboardRouting: Routing = {
     ],
 };
 
-export default dashboardRouting;
+export default depositRouting;

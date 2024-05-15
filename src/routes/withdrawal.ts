@@ -3,7 +3,7 @@ import {
 } from '@zeeve-platform/express-server-library';
 import * as withdrawalController from '../controllers/withdrawal';
 
-export const dashboardRouting: Routing = {
+export const withdrawalRouting: Routing = {
     isRoute: false,
     url: '/withdrawal',
     childRoutes: [
@@ -14,4 +14,4 @@ export const dashboardRouting: Routing = {
     ],
 };
 
-export default dashboardRouting;
+export default withdrawalRouting;

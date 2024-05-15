@@ -3,7 +3,7 @@ import {
 } from '@zeeve-platform/express-server-library';
 import * as activityController from '../controllers/activity';
 
-export const dashboardRouting: Routing = {
+export const activityRouting: Routing = {
     isRoute: false,
     url: '/activity',
     childRoutes: [
@@ -11,4 +11,4 @@ export const dashboardRouting: Routing = {
     ],
 };
 
-export default dashboardRouting;
+export default activityRouting;
