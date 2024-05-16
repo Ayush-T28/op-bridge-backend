@@ -65,9 +65,8 @@ export const getWithdrawal = async (depositId: string): Promise<DepositQuery> =>
 
 export const getWithdrawalsByAccount = async (account: string): Promise<DepositQuery[]> => {
     try {
-        const query = format(`SELECT *
-            FROM transactions where account= $1`);
-        const result = await databaseService.query(query, [account]);
+        const query = format('SELECT * FROM transactions where account= $1 and type=$2');
+        const result = await databaseService.query(query, [account, 'withdrawal']);
         if (result && result.rows) {
             return result.rows;
         }

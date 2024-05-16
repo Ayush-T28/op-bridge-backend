@@ -8,7 +8,7 @@ exports.up = function (knex) {
       id UUID PRIMARY KEY,
       account VARCHAR(42) NOT NULL,
       type VARCHAR(20) NOT NULL,
-      amount NUMERIC(20, 2) NOT NULL,
+      amount varchar(255) NOT NULL,
       currency_symbol VARCHAR(20),
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );

@@ -19,17 +19,27 @@ ExternalServer:
 auth-service:
   url: AUTH_SERVICE_INTERNAL
 
+
 L1:
+  chainId: L1_CHAIN_ID
+  name: L1_NAME
   rpcUrl: L1_RPC_URL
+  iconUrl: L1_ICON_URL
+  explorer: L1_EXPLORER
   explorerUrl: L1_EXPLORER_URL
-  contractAddress: L1_CONTRACT_ADDRESS
+  optimismPortalProxy: L1_PROXY
+  currency: L1_CURRENCY
   currencySymbol: L1_CURRENCY_SYMBOL
 
-
 L2:
+  chainId: L2_CHAIN_ID
+  name: L2_NAME
   rpcUrl: L2_RPC_URL
+  iconUrl: L2_ICON_URL
+  explorer: L2_EXPLORER
   explorerUrl: L2_EXPLORER_URL
-  contractAddress: L2_CONTRACT_ADDRESS
+  l2OutputOracleProxy: L2_PROXY
+  currency: L2_CURRENCY
   currencySymbol: L2_CURRENCY_SYMBOL
 
 TOKEN:
