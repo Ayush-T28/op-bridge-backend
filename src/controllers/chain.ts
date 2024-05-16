@@ -20,13 +20,8 @@ export const getL1Details: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
-                const rpcUrl = config.get('L1.rpcUrl');
-                const explorerUrl = config.get('L1.explorerUrl');
-                const contractAddress = config.get('L1.contractAddress');
-                const currencySymbol = config.get('L1.currencySymbol');
-                const data = {
-                    rpcUrl, explorerUrl, contractAddress, currencySymbol,
-                };
+                const l1Config = config.get('L1');
+                const data = l1Config;
                 return sendDataResponse({ success: true, message: 'l1 chain details', data }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
@@ -56,13 +51,8 @@ export const getL2Details: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
-                const rpcUrl = config.get('L2.rpcUrl');
-                const explorerUrl = config.get('L2.explorerUrl');
-                const contractAddress = config.get('L2.contractAddress');
-                const currencySymbol = config.get('L2.currencySymbol');
-                const data = {
-                    rpcUrl, explorerUrl, contractAddress, currencySymbol,
-                };
+                const l2Config = config.get('L2');
+                const data = l2Config;
                 return sendDataResponse({ success: true, message: 'l2 chain details', data }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
