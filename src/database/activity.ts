@@ -3,7 +3,7 @@ import { QueryResultRow } from '@zeeve-platform/postgres-interaction-sdk';
 import format from 'pg-format';
 import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
-import { Activity, ActivityQuery } from '../types';
+import { Activity, ActivityQuery, TransactionStatus } from '../types';
 
 const logger = getLogger('activity-queries');
 
@@ -61,6 +61,21 @@ export const getActivityByTransactionId = async (transactionId: string): Promise
         return {} as ActivityQuery[];
     } catch (error) {
         logger.error({ METHOD: 'getActivityByTransactionId', FILE: 'activity-queries', error });
+        throw error;
+    }
+};
+
+
+export const updateStatus = async (id: string, status: TransactionStatus): Promise<ActivityQuery[]> => {
+    try {
+        const query = format('UPDATE activity_logs SET status = $1 where id = $2');
+        const result = await databaseService.query(query, [status, id]);
+        if (result && result.rows) {
+            return result.rows;
+        }
+        return {} as ActivityQuery[];
+    } catch (error) {
+        logger.error({ METHOD: 'updateStatus', FILE: 'activity-queries', error });
         throw error;
     }
 };

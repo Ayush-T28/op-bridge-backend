@@ -5,7 +5,7 @@ import depositRouting from './routes/deposit';
 import withdrawalRouting from './routes/withdrawal';
 import activityRouting from './routes/activity';
 import chainRouting from './routes/chain';
-
+import './cron/transactionStatusCheck';
 
 const serverName = 'ExternalServer';
 const serverPort: number = config.get(`${serverName}.port`);

@@ -3,12 +3,12 @@ import { QueryResultRow } from '@zeeve-platform/postgres-interaction-sdk';
 import format from 'pg-format';
 import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
-import { Deposit, DepositQuery } from '../types';
+import { ActivityQuery, Deposit, DepositQuery } from '../types';
 
 const logger = getLogger('deposit-queries');
 
 const toSnakeCase = (input: string): string => input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
-
+type DepositActivity = DepositQuery & ActivityQuery & {activity_id: string};
 export const camelCaseToSnake = (updateValues: Object): {setClause: string, parameters: any[]} => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let setClause = '';
@@ -71,6 +71,24 @@ export const getDepositsByAccount = async (account: string): Promise<DepositQuer
             return result.rows;
         }
         return {} as DepositQuery[];
+    } catch (error) {
+        logger.error({ METHOD: 'getDepositsByAccount', FILE: 'deposit-queries', error });
+        throw error;
+    }
+};
+
+
+export const getDepositActivity = async (): Promise<DepositActivity[]> => {
+    try {
+        const query = format(`SELECT *, activity_logs.id AS activity_id FROM transactions JOIN activity_logs
+         ON transactions.id = activity_logs.transaction_id WHERE activity_logs.status = $1 AND transactions.type = $2;
+
+        `);
+        const result = await databaseService.query(query, ['pending', 'deposit']);
+        if (result && result.rows) {
+            return result.rows;
+        }
+        return {} as DepositActivity[];
     } catch (error) {
         logger.error({ METHOD: 'getDepositsByAccount', FILE: 'deposit-queries', error });
         throw error;
