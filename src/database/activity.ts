@@ -51,14 +51,29 @@ export const createActivity = async ({
 };
 
 
-export const getActivityByTransactionId = async (transactionId: string): Promise<ActivityQuery[]> => {
+export const getActivityByTransactionId = async (transactionId: string): Promise<ActivityQuery> => {
     try {
-        const query = format('SELECT * FROM activity_logs where transaction_id = $1');
+        const query = format('SELECT * FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
+        + ' where transaction_id = $1 ORDER BY activity_logs.created_at DESC');
         const result = await databaseService.query(query, [transactionId]);
         if (result && result.rows) {
-            return result.rows;
+            return result.rows[0];
         }
-        return {} as ActivityQuery[];
+        return {} as ActivityQuery;
+    } catch (error) {
+        logger.error({ METHOD: 'getActivityByTransactionId', FILE: 'activity-queries', error });
+        throw error;
+    }
+};
+
+export const getInitiateTransaction = async (transactionId: string): Promise<ActivityQuery> => {
+    try {
+        const query = format('SELECT * FROM activity_logs WHERE transaction_id = $1 AND subtype = $2');
+        const result = await databaseService.query(query, [transactionId, 'initiate']);
+        if (result && result.rows) {
+            return result.rows[0];
+        }
+        return {} as ActivityQuery;
     } catch (error) {
         logger.error({ METHOD: 'getActivityByTransactionId', FILE: 'activity-queries', error });
         throw error;

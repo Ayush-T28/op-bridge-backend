@@ -8,6 +8,7 @@ export const activityRouting: Routing = {
     url: '/activity',
     childRoutes: [
         activityController.getActivity,
+        activityController.getInitaiteActivity,
     ],
 };
 
