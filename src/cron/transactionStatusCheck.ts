@@ -44,11 +44,10 @@ schedule.scheduleJob('*/10 * * * *', async () => {
 schedule.scheduleJob('*/10 * * * *', async () => {
     try {
         logger.info('Withdrawal Status Update Cron: start');
-        const web3 = new Web3(config.get('L1.rpcUrl') as string);
+        const web3 = new Web3(config.get('L2.rpcUrl') as string);
         const activity = await getWithdrawalActivity();
         activity.forEach(async (item) => {
             try {
-                console.log(51, item);
                 // Get the transaction receipt
                 const receipt = await web3.eth.getTransactionReceipt(item.transaction_hash);
                 logger.info(receipt, receipt.status, receipt.status.toString());
