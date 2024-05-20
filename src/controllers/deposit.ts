@@ -1,9 +1,13 @@
+/* eslint-disable camelcase */
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { handleErrorResponse, sendDataResponse, Route } from '@zeeve-platform/express-server-library';
 import { createDepositValidation } from '../middlewares/deposit';
 import * as DepositDatabase from '../database/deposit';
-import { createActivity } from '../database/activity';
+import { createActivity, getLatestActivity } from '../database/activity';
+import { DepositQuery } from '../types';
+
+type ResultData = DepositQuery & { subtype: string, status: string, transaction_id: string, transaction_hash: string};
 
 export const createDeposit: Route = {
     isRoute: true,
@@ -76,7 +80,20 @@ export const getDepositsByAccount: Route = {
             try {
                 const { account } = req.params;
                 const data = await DepositDatabase.getDepositsByAccount(account);
-                return sendDataResponse({ success: true, message: 'Deposit List', data }, res);
+                const result: ResultData[] = [];
+                for (let i = 0; i < data.length; i += 1) {
+                    const item = data[i];
+                    // eslint-disable-next-line no-await-in-loop
+                    const latestActivity = await getLatestActivity(item.id);
+                    result.push({
+                        ...item,
+                        subtype: latestActivity.subtype,
+                        status: latestActivity.status,
+                        transaction_id: latestActivity.transaction_id,
+                        transaction_hash: latestActivity.transaction_hash,
+                    });
+                }
+                return sendDataResponse({ success: true, message: 'Deposit List', data: result }, res);
             } catch (error: any) {
                 if (error.message && error.status) {
                     return handleErrorResponse({ status: error.status, message: error.message }, res);
