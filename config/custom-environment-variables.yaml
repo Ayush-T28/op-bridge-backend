@@ -38,6 +38,7 @@ L2:
   iconUrl: L2_ICON_URL
   explorer: L2_EXPLORER
   explorerUrl: L2_EXPLORER_URL
+  l2ToL1MessagePasserProxy: L2_TO_L1_MESSAGE_PROXY
   l2OutputOracleProxy: L2_PROXY
   currency: L2_CURRENCY
   currencySymbol: L2_CURRENCY_SYMBOL
@@ -46,3 +47,4 @@ TOKEN:
   name: TOKEN_NAME
   symbol: TOKEN_SYMBOL
   contractAddress: TOKEN_CONTRACT_ADDRESS
+  iconUrl: TOKEN_ICON_URL
