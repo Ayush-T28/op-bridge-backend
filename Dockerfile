@@ -1,7 +1,7 @@
 FROM node:16-alpine as builder
 ARG GITLAB_ACCESS_TOKEN
-LABEL maintainer=""
-LABEL description="plaground-orchestrator-backend service"
+LABEL maintainer="Rohan Sharma<rohan.sharma@zeeve.io>, Harish H<harish.h@zeeve.io>"
+LABEL description="bridge-backend service"
 #RUN apk add --no-cache --virtual .gyp python2 make g++
 
 # Create app directory
@@ -46,8 +46,6 @@ COPY --chown=node:node --from=builder /usr/src/app/dist ./dist
 COPY --chown=node:node --from=builder /usr/src/app/config ./config
 COPY --chown=node:node --from=builder /usr/src/app/migrations ./migrations
 COPY --chown=node:node --from=builder /usr/src/app/knexfile.js ./knexfile.js
-COPY --chown=node:node --from=builder /usr/src/app/templates ./templates
-COPY --chown=node:node --from=builder /usr/src/app/db-migrations ./db-migrations
 
 EXPOSE 3009
 

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GITLAB_ACCESS_TOKEN=${GITLAB_ACCESS_TOKEN}
+    ports:
+      - "3009:3009"
+    environment:
+      - PORT=3009
+      - BUILD_ENV=production
+    volumes:
+      - ./data:/home/node/app/data
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
