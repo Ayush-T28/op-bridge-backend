@@ -83,12 +83,8 @@ export const getTokenDetails: Route = {
          */
         async (req: Request, res: Response): Promise<void> => {
             try {
-                const tokenName = config.get('TOKEN.name');
-                const tokenSymbol = config.get('TOKEN.symbol');
-                const tokenContractAddress = config.get('TOKEN.contractAddress');
-                const data = {
-                    tokenName, tokenSymbol, tokenContractAddress,
-                };
+                const token = config.get('TOKEN');
+                const data = token;
                 return sendDataResponse({ success: true, message: 'token details', data }, res);
             } catch (error: any) {
                 if (error.message && error.status) {

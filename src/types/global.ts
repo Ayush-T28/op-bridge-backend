@@ -46,7 +46,7 @@ export type Deposit = {
   id: string;
   account: string;
   type: 'deposit';
-  amount: number;
+  amount: string;
   currencySymbol: string;
   createdAt: Date;
 };
@@ -56,7 +56,7 @@ export type DepositQuery = {
   id: string;
   account: string;
   type: 'deposit';
-  amount: number;
+  amount: string;
   currency_symbol: string;
   created_at: Date;
 };
@@ -66,7 +66,7 @@ export type Withdrawal = {
   id: string;
   account: string;
   type: 'withdrawal';
-  amount: number;
+  amount: string;
   currencySymbol: string;
   createdAt: Date;
 };
@@ -76,7 +76,7 @@ export type WithdrawalQuery = {
   id: string;
   account: string;
   type: 'withdrawal';
-  amount: number;
+  amount: string;
   currency_symbol: string;
   created_at: Date;
 };

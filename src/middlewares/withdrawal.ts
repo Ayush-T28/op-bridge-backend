@@ -13,7 +13,7 @@ export const createWithdrawalValidation = (req: Request,
             account: Joi.string().required(),
             type: Joi.string().required(),
             subtype: Joi.string().required(),
-            amount: Joi.number().required(),
+            amount: Joi.string().required(),
             transactionHash: Joi.string().required(),
         });
 
