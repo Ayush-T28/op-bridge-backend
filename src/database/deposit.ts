@@ -3,12 +3,11 @@ import { QueryResultRow } from '@zeeve-platform/postgres-interaction-sdk';
 import format from 'pg-format';
 import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
-import { ActivityQuery, Deposit, DepositQuery } from '../types';
+import { Deposit, DepositQuery } from '../types';
 
 const logger = getLogger('deposit-queries');
 
 const toSnakeCase = (input: string): string => input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
-type DepositActivity = DepositQuery & ActivityQuery & {activity_id: string};
 export const camelCaseToSnake = (updateValues: Object): {setClause: string, parameters: any[]} => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let setClause = '';
@@ -65,8 +64,7 @@ export const getDeposit = async (depositId: string): Promise<DepositQuery> => {
 
 export const getDepositsByAccount = async (account: string): Promise<DepositQuery[]> => {
     try {
-        const query = format('SELECT DISTINCT transactions.id, transactions.*, activity_logs.* FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
-        + ' where account = $1 AND type=$2  ORDER BY activity_logs.created_at DESC');
+        const query = format('SELECT * FROM transactions WHERE account=$1 and type=$2');
         const result = await databaseService.query(query, [account, 'deposit']);
         if (result && result.rows) {
             return result.rows;
@@ -79,19 +77,16 @@ export const getDepositsByAccount = async (account: string): Promise<DepositQuer
 };
 
 
-export const getDepositActivity = async (): Promise<DepositActivity[]> => {
+export const getAllDeposit = async (): Promise<DepositQuery[]> => {
     try {
-        const query = format(`SELECT *, activity_logs.id AS activity_id FROM transactions JOIN activity_logs
-         ON transactions.id = activity_logs.transaction_id WHERE activity_logs.status = $1 AND transactions.type = $2;
-
-        `);
-        const result = await databaseService.query(query, ['pending', 'deposit']);
+        const query = format('SELECT * FROM transactions WHERE type=$1');
+        const result = await databaseService.query(query, ['deposit']);
         if (result && result.rows) {
             return result.rows;
         }
-        return {} as DepositActivity[];
+        return {} as DepositQuery[];
     } catch (error) {
-        logger.error({ METHOD: 'getDepositsByAccount', FILE: 'deposit-queries', error });
+        logger.error({ METHOD: 'getAllDeposit', FILE: 'deposit-queries', error });
         throw error;
     }
 };

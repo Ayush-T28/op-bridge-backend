@@ -4,13 +4,12 @@ import format from 'pg-format';
 import databaseService from '../utils/database';
 import { getLogger } from '../utils/logger';
 import {
-    ActivityQuery, Deposit, DepositQuery, WithdrawalQuery,
+    Deposit, WithdrawalQuery,
 } from '../types';
 
 const logger = getLogger('withdrawal-queries');
 
 const toSnakeCase = (input: string): string => input.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
-type WithdrawalActivity = DepositQuery & ActivityQuery & {activity_id: string};
 export const camelCaseToSnake = (updateValues: Object): {setClause: string, parameters: any[]} => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let setClause = '';
@@ -67,8 +66,7 @@ export const getWithdrawal = async (depositId: string): Promise<WithdrawalQuery>
 
 export const getWithdrawalsByAccount = async (account: string): Promise<WithdrawalQuery[]> => {
     try {
-        const query = format('SELECT * FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
-        + ' where account = $1 AND type=$2  ORDER BY activity_logs.created_at DESC');
+        const query = format('SELECT * FROM transactions WHERE account=$1 and type=$2');
         const result = await databaseService.query(query, [account, 'withdrawal']);
         if (result && result.rows) {
             return result.rows;
@@ -80,19 +78,16 @@ export const getWithdrawalsByAccount = async (account: string): Promise<Withdraw
     }
 };
 
-export const getWithdrawalActivity = async (): Promise<WithdrawalActivity[]> => {
+export const getAllWithdrawal = async (): Promise<WithdrawalQuery[]> => {
     try {
-        const query = format(`SELECT *, activity_logs.id AS activity_id FROM transactions JOIN activity_logs
-         ON transactions.id = activity_logs.transaction_id WHERE activity_logs.status = $1 AND transactions.type = $2;
-
-        `);
-        const result = await databaseService.query(query, ['pending', 'withdrawal']);
+        const query = format('SELECT * FROM transactions WHERE type=$1');
+        const result = await databaseService.query(query, ['withdrawal']);
         if (result && result.rows) {
             return result.rows;
         }
-        return {} as WithdrawalActivity[];
+        return {} as WithdrawalQuery[];
     } catch (error) {
-        logger.error({ METHOD: 'getWithdrawalActivity', FILE: 'withdrawal-queries', error });
+        logger.error({ METHOD: 'getAllWithdrawal', FILE: 'withdrawal-queries', error });
         throw error;
     }
 };

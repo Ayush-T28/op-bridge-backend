@@ -94,3 +94,41 @@ export const updateStatus = async (id: string, status: TransactionStatus): Promi
         throw error;
     }
 };
+
+
+export const getAllActivity = async (transactionId: string, status?: string): Promise<ActivityQuery[]> => {
+    try {
+        if (status) {
+            const query = format('SELECT * FROM activity_logs WHERE transaction_id=$1 and status=$2');
+            const result = await databaseService.query(query, [transactionId, status]);
+            if (result && result.rows) {
+                return result.rows;
+            }
+        } else {
+            const query = format('SELECT * FROM transactions WHERE transaction_id=$1');
+            const result = await databaseService.query(query, [transactionId]);
+            if (result && result.rows) {
+                return result.rows;
+            }
+        }
+        return {} as ActivityQuery[];
+    } catch (error) {
+        logger.error({ METHOD: 'getAllActivity', FILE: 'activity-queries', error });
+        throw error;
+    }
+};
+
+
+export const getLatestActivity = async (transactionId: string): Promise<ActivityQuery> => {
+    try {
+        const query = format('SELECT * FROM activity_logs WHERE transaction_id=$1 ORDER BY created_at DESC');
+        const result = await databaseService.query(query, [transactionId]);
+        if (result && result.rows) {
+            return result.rows[0];
+        }
+        return {} as ActivityQuery;
+    } catch (error) {
+        logger.error({ METHOD: 'getLatestActivity', FILE: 'activity-queries', error });
+        throw error;
+    }
+};
