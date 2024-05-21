@@ -18,7 +18,7 @@ COPY . .
 
 RUN npm run-script build && ls
 
-FROM node:16-alpine
+FROM node:20-alpine
 ARG GITLAB_ACCESS_TOKEN
 ARG PORT=3009
 ARG BUILD_ENV
