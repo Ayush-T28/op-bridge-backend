@@ -65,7 +65,7 @@ export const getDeposit = async (depositId: string): Promise<DepositQuery> => {
 
 export const getDepositsByAccount = async (account: string): Promise<DepositQuery[]> => {
     try {
-        const query = format('SELECT * FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
+        const query = format('SELECT DISTINCT transactions.id, transactions.*, activity_logs.* FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
         + ' where account = $1 AND type=$2  ORDER BY activity_logs.created_at DESC');
         const result = await databaseService.query(query, [account, 'deposit']);
         if (result && result.rows) {
