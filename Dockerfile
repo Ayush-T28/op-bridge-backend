@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:20-alpine as builder
 ARG GITLAB_ACCESS_TOKEN
 LABEL maintainer="Rohan Sharma<rohan.sharma@zeeve.io>, Harish H<harish.h@zeeve.io>"
 LABEL description="bridge-backend service"
