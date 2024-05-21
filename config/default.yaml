@@ -33,7 +33,7 @@ L1:
 L2:
   chainId: 42069
   name: OP Chain
-  rpcUrl: http://45.77.62.185:8545
+  rpcUrl: https://bridgeui.testing.zeeve.net
   iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
   explorer: Blockscout
   explorerUrl: http://45.77.62.185:80
