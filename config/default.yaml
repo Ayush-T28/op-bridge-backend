@@ -36,11 +36,12 @@ L2:
   rpcUrl: https://bridgeui.testing.zeeve.net
   iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
   explorer: Blockscout
-  explorerUrl: http://45.77.62.185:80
+  explorerUrl: https://bridgeui.testing.zeeve.net
   l2ToL1MessagePasserProxy: "0x4200000000000000000000000000000000000016"
   l2OutputOracleProxy: "0xc961e9814733bcaE318F85b23D5530376A0a4297"
   currency: BridgeUI
   currencySymbol: BUI
+  finalizationPeriod: 3600
 
 TOKEN:
   name: BridgeUIToken
