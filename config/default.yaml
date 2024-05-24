@@ -20,31 +20,31 @@ Database:
   database: bridge
 
 L1:
-  chainId: 17000
-  name: Holesky
-  rpcUrl: https://ethereum-holesky-rpc.publicnode.com
+  chainId: 11155111
+  name: Sepolia
+  rpcUrl: https://testing-sepolia-testnet.zeeve.net/IsL4JRvcCOuJilvuv8Mj/rpc
   iconUrl: https://app.nfts2me.com/assets/chainlist/holesky.png
   explorer: Etherscan
-  explorerUrl: https://holesky.etherscan.io/
-  optimismPortalProxy: "0xD0608c887Ac8B97C20a0fC6574b6Eb6e978f42cD"
+  explorerUrl: https://sepolia.etherscan.io
+  optimismPortalProxy: "0x91Cccb6fF2d561a3DC71c6072C23dA6055622cdD"
+  l2OutputOracleProxy: "0x9CBE095A6fAeA0186c44F95701b9d1d2e329a58a"
   currency: Ethereum
   currencySymbol: ETH
-
+ 
 L2:
-  chainId: 42069
+  chainId: 625
   name: OP Chain
-  rpcUrl: https://bridgeui.testing.zeeve.net
+  rpcUrl: https://sequencer.rpc.bnry.testnet.zeeve.net/
   iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
   explorer: Blockscout
-  explorerUrl: https://bridgeui.testing.zeeve.net
+  explorerUrl: https://bnry.testnet.explorer.zeeve.net/
   l2ToL1MessagePasserProxy: "0x4200000000000000000000000000000000000016"
-  l2OutputOracleProxy: "0xc961e9814733bcaE318F85b23D5530376A0a4297"
-  currency: BridgeUI
-  currencySymbol: BUI
-  finalizationPeriod: 3600
-
+  currency: Test BNRY
+  currencySymbol: TBNRY
+  finalizationPeriod: 12
+ 
 TOKEN:
-  name: BridgeUIToken
-  symbol: BUI
-  contractAddress: "0x90fa379e947fDe331f3465d19845A8eB5031AC0B"
+  name: Test BNRY
+  symbol: TBNRY
+  contractAddress: "0x46d878bf7BF62Ec542953CB89Ac0bF58d991181e"
   iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
