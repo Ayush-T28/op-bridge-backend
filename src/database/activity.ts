@@ -53,7 +53,8 @@ export const createActivity = async ({
 
 export const getActivityByTransactionId = async (transactionId: string): Promise<ActivityQuery> => {
     try {
-        const query = format('SELECT * FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
+        const query = format('SELECT activity_logs.*, transactions.amount'
+        + ' FROM activity_logs INNER JOIN transactions ON activity_logs.transaction_id = transactions.id'
         + ' where transaction_id = $1 ORDER BY activity_logs.created_at DESC');
         const result = await databaseService.query(query, [transactionId]);
         if (result && result.rows) {
