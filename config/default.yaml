@@ -5,7 +5,7 @@ ExternalServer:
   numberOfProxies: 2
   cors:
     allowedOrigins:
-      - '["http://localhost"]'
+      - '["http://localhost:5173"]'
   requestBodySize: 1mb
 logger:
   level: "debug"
@@ -13,3 +13,38 @@ logger:
 Database:
   max: 20
   min: 5
+  host: localhost
+  port: 5432
+  user: postgres
+  password: postgres
+  database: bridge
+
+L1:
+  chainId: 17000
+  name: Holesky
+  rpcUrl: https://ethereum-holesky-rpc.publicnode.com
+  iconUrl: https://app.nfts2me.com/assets/chainlist/holesky.png
+  explorer: Etherscan
+  explorerUrl: https://holesky.etherscan.io/
+  optimismPortalProxy: "0xD0608c887Ac8B97C20a0fC6574b6Eb6e978f42cD"
+  currency: Ethereum
+  currencySymbol: ETH
+
+L2:
+  chainId: 42069
+  name: OP Chain
+  rpcUrl: https://bridgeui.testing.zeeve.net
+  iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
+  explorer: Blockscout
+  explorerUrl: https://bridgeui.testing.zeeve.net
+  l2ToL1MessagePasserProxy: "0x4200000000000000000000000000000000000016"
+  l2OutputOracleProxy: "0xc961e9814733bcaE318F85b23D5530376A0a4297"
+  currency: BridgeUI
+  currencySymbol: BUI
+  finalizationPeriod: 3600
+
+TOKEN:
+  name: BridgeUIToken
+  symbol: BUI
+  contractAddress: "0x90fa379e947fDe331f3465d19845A8eB5031AC0B"
+  iconUrl: https://cryptologos.cc/logos/optimism-ethereum-op-logo.png
