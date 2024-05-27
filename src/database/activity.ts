@@ -39,6 +39,7 @@ export const createActivity = async ({
         ];
         const query = format('INSERT INTO activity_logs (id, transaction_id, subtype, transaction_hash,'
                 + ' status, created_at) VALUES %L', parameters);
+        console.log({ query, parameters });
         const result = await databaseService.query(query, []);
         if (result && result.rows) {
             return result.rows[0];

@@ -81,6 +81,7 @@ export const updateWithdrawal: Route = {
             try {
                 const { transactionId } = req.params;
                 const { subtype, transactionHash } = req.body;
+                console.log({ transactionHash, transactionId, subtype });
                 await createActivity({
                     id: uuidv4(),
                     transactionId,
