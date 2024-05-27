@@ -51,7 +51,8 @@ schedule.scheduleJob('*/10 * * * *', async () => {
 schedule.scheduleJob('*/10 * * * *', async () => {
     try {
         logger.info('Withdrawal Status Update Cron: start');
-        const web3 = new Web3(config.get('L2.rpcUrl') as string);
+        const web3L1 = new Web3(config.get('L1.rpcUrl') as string);
+        const web3L2 = new Web3(config.get('L2.rpcUrl') as string);
         const activity = await getAllWithdrawal();
         activity.forEach(async (item) => {
             try {
@@ -59,7 +60,12 @@ schedule.scheduleJob('*/10 * * * *', async () => {
                 const allActivity = await getAllActivity(item.id, 'pending');
                 allActivity.forEach(async (data) => {
                     try {
-                        const receipt = await web3.eth.getTransactionReceipt(data.transaction_hash);
+                        let receipt;
+                        if (data.subtype === 'initiate') {
+                            receipt = await web3L2.eth.getTransactionReceipt(data.transaction_hash);
+                        } else {
+                            receipt = await web3L1.eth.getTransactionReceipt(data.transaction_hash);
+                        }
                         logger.info(receipt, receipt.status, receipt.status.toString());
                         if (receipt) {
                             // Check the status of the transaction
