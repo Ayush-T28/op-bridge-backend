@@ -121,6 +121,7 @@ export const getWithdrawalsByAccount: Route = {
             try {
                 const { account } = req.params;
                 const data = await WithdrawalDatabase.getWithdrawalsByAccount(account);
+                console.log(data);
                 const result: ResultData[] = [];
                 for (let i = 0; i < data.length; i += 1) {
                     const item = data[i];
