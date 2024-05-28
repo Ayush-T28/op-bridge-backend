@@ -1,6 +1,9 @@
 ExternalServer:
   port: 3009
   enableGlobalRateLimit: true
+  globalRateLimit:
+    window: 3000000
+    hits: 100
   headerCtMaxAge: 86400
   numberOfProxies: 2
   cors:
